@@ -1,9 +1,11 @@
 node_modules
 .env
 /.idea
+
 # Hardhat files
 /cache
 /artifacts
+/.openzeppelin
 
 # TypeChain files
 /typechain

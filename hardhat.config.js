@@ -1,5 +1,6 @@
+require("dotenv").config();
 require("@nomiclabs/hardhat-etherscan");
-require('@openzeppelin/hardhat-upgrades');
+require("@openzeppelin/hardhat-upgrades");
 require("@nomicfoundation/hardhat-toolbox");
 
 /** @type import('hardhat/config').HardhatUserConfig */
@@ -11,31 +12,36 @@ module.exports = {
         settings: {
           optimizer: {
             enabled: true,
-            runs: 200
-          }
-        }
-      }
-    ]
+            runs: 200,
+          },
+        },
+      },
+    ],
   },
-  plugins: [
-    'truffle-plugin-verify'
-  ],
+  plugins: ["truffle-plugin-verify"],
   etherscan: {
-    apiKey: {
-      mainnet: "<YOU_API_KEY>"
-    }
+    apiKey: process.env.ETHERSCAN_API_KEY,
+    customChains: [
+      {
+        network: "baseSepolia",
+        chainId: 84532,
+        urls: {
+          apiURL: "https://api-sepolia.basescan.org/api",
+          browserURL: "https://sepolia.basescan.org",
+        },
+      },
+    ],
   },
   allowUnlimitedContractSize: true,
   networks: {
     localhost: {
       chainId: 31337,
-      allowUnlimitedContractSize: true
+      allowUnlimitedContractSize: true,
     },
-    base: {
-      url: `https://rpc.ankr.com/base/04f160fb03790fa4d10a0a862d335ffb962f2194065f0f404dd2cdf9ded6f6c8`,
-      accounts: [
-        `<ACC_PK>`
-      ]
-    }
-  }
+    baseSepolia: {
+      url: "https://sepolia.base.org",
+      accounts: [process.env.PRIVATE_KEY],
+      chainId: 84532,
+    },
+  },
 };
